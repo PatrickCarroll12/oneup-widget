@@ -1,9 +1,23 @@
 "use client";
 
 import { useState } from "react";
+import { calculateCommission } from "./services/comissionService";
 
 export default function Home() {
   const [revenue, setRevenue] = useState<number | null>(null);
+  const [commissionResult, setCommissionResult] = useState<{
+    total: number;
+    breakdown: { tier: string; commission: number }[];
+  } | null>(null);
+
+  const handleCalculate = () => {
+    if (revenue !== null && revenue >= 0) {
+      const result = calculateCommission(revenue);
+      setCommissionResult(result);
+    } else {
+      setCommissionResult(null);
+    }
+  };
 
   return (
     <div
@@ -28,6 +42,7 @@ export default function Home() {
         }}
       />
       <button
+        onClick={handleCalculate}
         style={{
           padding: "10px 20px",
           backgroundColor: "#0070f3",
@@ -40,6 +55,19 @@ export default function Home() {
       >
         Calculate Commission
       </button>
+
+      {commissionResult && (
+        <div style={{ marginTop: "20px" }}>
+          <h2>Total Commission: £{commissionResult.total}</h2>
+          <ul>
+            {commissionResult.breakdown.map((item, index) => (
+              <li key={index}>
+                {item.tier}: £{item.commission}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
