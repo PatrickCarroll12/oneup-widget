@@ -2,6 +2,8 @@
 
 A simple commission calculator built with Next.js and Chart.js. This application allows users to enter their revenue and calculate the corresponding commission, visualizing the breakdown using a doughnut chart.
 
+Deploy Preview Here: https://my-commission-widget.vercel.app/
+
 ## Table of Contents
 
 - [Features](#features)
